@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scan-watch"
-version = "1.0.0"
+version = "1.0.1"
 description = "Scan automatically when paper is placed into an eSCL network scanner, store PDFs or upload them to Paperless-ngx"
 readme = "README.md"
 license = {text = "MIT"}
