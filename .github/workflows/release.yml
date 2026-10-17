@@ -1,0 +1,50 @@
+# A pushed tag vX.Y.Z (not a beta or test like vX.Y.Z-beta.1) is tested and turned
+# into a draft GitHub release whose text is the version's section of CHANGELOG.md.
+# Publishing the draft pushes the Docker image (docker.yml).
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '!v*-*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Check version
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          grep -q "^version = \"$version\"$" pyproject.toml \
+            || { echo "pyproject.toml does not have version $version"; exit 1; }
+          grep -q "^## \[$version\]" CHANGELOG.md \
+            || { echo "CHANGELOG.md has no section [$version]"; exit 1; }
+
+      - name: Test
+        run: |
+          pip install .
+          python -m unittest discover -s tests -t .
+          python tools/update_po.py --check
+
+      - name: Extract release notes
+        uses: ffurrer2/extract-release-notes@273da39a24fb7db106a35526c8162815faffd31d # 3.1.0
+        with:
+          release_notes_file: RELEASE_NOTES.md
+
+      - name: Create release
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # 3.0.3
+        with:
+          name: ${{ github.ref_name }}
+          body_path: RELEASE_NOTES.md
+          draft: true
+          prerelease: false
