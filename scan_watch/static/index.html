@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>scan-watch</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon.png" type="image/png" sizes="180x180">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+:root {
+  --bg: #f4f5f7; --surface: #ffffff; --surface-2: #f0f2f5; --border: #dfe2e8;
+  --text: #1c1f26; --muted: #646b78; --accent: #3b6ef5; --accent-text: #ffffff;
+  --ok: #1f8a4c; --ok-bg: #e3f4ea; --busy: #3b6ef5; --busy-bg: #e6edff;
+  --warn: #a8610a; --warn-bg: #fdf0dc; --err: #c2352b; --err-bg: #fbe6e4;
+  --shadow: 0 1px 2px rgba(20, 24, 33, .06), 0 2px 8px rgba(20, 24, 33, .04);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161b; --surface: #1d2027; --surface-2: #252932; --border: #323743;
+    --text: #e6e8ec; --muted: #9aa1ae; --accent: #6d93ff; --accent-text: #0e1220;
+    --ok: #4cc27f; --ok-bg: #173324; --busy: #6d93ff; --busy-bg: #1c2747;
+    --warn: #e6a347; --warn-bg: #3a2c15; --err: #f07167; --err-bg: #3d1d1b;
+    --shadow: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14161b; --surface: #1d2027; --surface-2: #252932; --border: #323743;
+  --text: #e6e8ec; --muted: #9aa1ae; --accent: #6d93ff; --accent-text: #0e1220;
+  --ok: #4cc27f; --ok-bg: #173324; --busy: #6d93ff; --busy-bg: #1c2747;
+  --warn: #e6a347; --warn-bg: #3a2c15; --err: #f07167; --err-bg: #3d1d1b;
+  --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 4px 0 16px; }
+header h1 { font-size: 18px; margin: 0; letter-spacing: -.01em; }
+header .conn { font-size: 13px; color: var(--muted); }
+nav { display: flex; gap: 4px; margin-left: auto; }
+nav a { font-size: 14px; text-decoration: none; color: var(--muted); padding: 6px 12px; border-radius: 8px; }
+nav a[aria-current="page"] { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: var(--shadow); border: 1px solid var(--border); }
+[data-page][hidden] { display: none; }
+section {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  box-shadow: var(--shadow); padding: 16px; margin-bottom: 16px;
+}
+h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0 0 12px; }
+a { color: var(--accent); }
+button {
+  font: inherit; border-radius: 8px; padding: 8px 14px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text);
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+button:disabled { opacity: .5; cursor: default; }
+a.button { display: inline-block; border-radius: 8px; padding: 8px 14px; text-decoration: none; border: 1px solid var(--border); }
+a.button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+#setup { flex: none; }
+#setup[hidden] { display: none; }
+
+/* Status */
+#status { display: flex; gap: 14px; align-items: center; }
+#status .dot { flex: none; width: 14px; height: 14px; border-radius: 50%; background: var(--muted); }
+#status[data-tone="ok"] .dot { background: var(--ok); box-shadow: 0 0 0 5px var(--ok-bg); }
+#status[data-tone="busy"] .dot { background: var(--busy); box-shadow: 0 0 0 5px var(--busy-bg); animation: pulse 1.2s infinite; }
+#status[data-tone="warn"] .dot { background: var(--warn); box-shadow: 0 0 0 5px var(--warn-bg); }
+#status[data-tone="err"] .dot { background: var(--err); box-shadow: 0 0 0 5px var(--err-bg); }
+@keyframes pulse { 50% { opacity: .35; } }
+#status > div { flex: 1; min-width: 0; }
+#pause { flex: none; }
+#state-text { font-size: 19px; font-weight: 600; }
+#summary, #auto-pause { color: var(--muted); font-size: 14px; margin-top: 2px; overflow-wrap: anywhere; }
+#auto-pause { margin-top: 8px; font-variant-numeric: tabular-nums; }
+#auto-pause[hidden] { display: none; }
+#auto-pause .bar { height: 3px; margin-top: 4px; max-width: 260px; border-radius: 2px; background: var(--surface-2); overflow: hidden; }
+#auto-pause-bar { height: 100%; background: var(--muted); transition: width 1s linear; }
+#scanner { display: flex; gap: 12px; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+#scanner[hidden] { display: none; }
+#quick-profiles { display: flex; align-items: center; gap: 10px; margin-top: 14px; color: var(--muted); font-size: 14px; }
+#quick-profiles[hidden] { display: none; }
+#profile-select { font: inherit; color: var(--text); padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); min-width: 0; max-width: 100%; }
+#scanner img { flex: none; width: 44px; height: 44px; object-fit: contain; }
+#scanner .model { font-weight: 600; font-size: 14px; }
+#scanner .meta { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+#paperless-line { margin-top: 10px; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+#paperless-line[hidden] { display: none; }
+#paperless-line .ok { color: var(--ok); font-weight: 600; }
+#paperless-line .err { color: var(--err); font-weight: 600; }
+
+.notice { border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; }
+.notice.warn { background: var(--warn-bg); color: var(--text); border: 1px solid var(--warn); }
+.notice.err { background: var(--err-bg); border: 1px solid var(--err); }
+.notice p { margin: 0 0 8px; }
+.notice .dismiss { float: right; margin: -4px -4px 4px 12px; padding: 3px 10px; font-size: 13px; }
+#conflict p { margin: 0; }
+.fp { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12.5px; overflow-wrap: anywhere; }
+
+/* Documents */
+#docs { display: grid; gap: 10px; }
+.doc { display: flex; gap: 12px; align-items: center; padding: 8px; border-radius: 10px; background: var(--surface-2); }
+.doc img { flex: none; width: 54px; height: 76px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); background: #fff; }
+.doc .name { font-weight: 600; font-size: 14px; overflow-wrap: anywhere; }
+.doc .meta { color: var(--muted); font-size: 13px; }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.badge { font-size: 12px; padding: 2px 8px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); text-decoration: none; color: var(--text); }
+.badge.ok { background: var(--ok-bg); border-color: transparent; color: var(--ok); }
+.badge.busy { background: var(--busy-bg); border-color: transparent; color: var(--busy); }
+.badge.err { background: var(--err-bg); border-color: transparent; color: var(--err); }
+.empty { color: var(--muted); font-size: 14px; }
+
+/* Settings */
+form { display: grid; gap: 18px; }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
+legend { font-weight: 600; font-size: 14px; margin-bottom: 6px; padding: 0; }
+.field { display: grid; grid-template-columns: minmax(130px, 200px) 1fr; gap: 12px; align-items: center; }
+.field label { color: var(--muted); font-size: 14px; }
+.field input[type=text], .field input[type=password], .field select {
+  width: 100%; font: inherit; padding: 7px 10px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.field input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); }
+.field .ro { font-size: 14px; overflow-wrap: anywhere; }
+.lock { font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 0 5px; margin-left: 6px; white-space: nowrap; }
+.actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.save-msg { font-size: 14px; color: var(--muted); }
+.save-msg.err { color: var(--err); }
+@media (max-width: 520px) { .field { grid-template-columns: 1fr; gap: 4px; } }
+
+/* Profiles */
+#profiles { display: grid; gap: 10px; }
+.profiles { display: grid; gap: 8px; }
+.profile { display: grid; gap: 4px; padding: 8px 8px 10px 12px; border: 1px solid var(--border); border-radius: 10px; }
+.profile .head { display: flex; align-items: center; gap: 8px; }
+.profile .name { font-weight: 600; overflow-wrap: anywhere; }
+.profile .tools { margin-left: auto; display: flex; gap: 4px; }
+.profile .tools button { padding: 3px 10px; font-size: 13px; }
+.profile .tools .del { border-color: transparent; background: transparent; color: var(--muted); font-size: 16px; line-height: 1.2; padding: 2px 8px; }
+.profile .tools .del:hover { color: var(--err); }
+.profile .line { color: var(--muted); font-size: 12.5px; overflow-wrap: anywhere; margin: 0; }
+.profile.editing { gap: 10px; padding: 14px; border-color: var(--accent); }
+.save-profile { display: flex; flex-wrap: wrap; gap: 8px; flex: 1 1 320px; align-items: center; }
+.save-profile button { white-space: nowrap; }
+.save-profile input { flex: 1 1 140px; min-width: 0; font: inherit; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+
+/* Log */
+details summary { cursor: pointer; color: var(--muted); font-size: 14px; }
+/* A collapsible section: the heading is the summary. */
+details.card > summary { list-style: none; display: flex; align-items: center; gap: 8px; }
+details.card > summary::-webkit-details-marker { display: none; }
+details.card > summary::before { content: "▸"; color: var(--muted); font-size: 12px; transition: transform .15s; }
+details.card[open] > summary::before { transform: rotate(90deg); }
+details.card > summary h2 { margin: 0; }
+details.card[open] > summary { margin-bottom: 12px; }
+#log { margin: 10px 0 0; max-height: 320px; overflow: auto; font: 12.5px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+#log .t { color: var(--muted); }
+#log .w { color: var(--warn); }
+#log .e { color: var(--err); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>scan-watch</h1>
+    <span class="conn" id="conn"></span>
+    <nav>
+      <a href="#" data-nav="main" data-t>Overview</a>
+      <a href="#config" data-nav="config" data-t>Configuration</a>
+    </nav>
+  </header>
+
+  <section>
+    <div id="status" data-tone="muted">
+      <span class="dot"></span>
+      <div>
+        <div id="state-text">…</div>
+        <div id="summary"></div>
+        <div id="auto-pause" hidden>
+          <span id="auto-pause-text"></span>
+          <div class="bar"><div id="auto-pause-bar"></div></div>
+        </div>
+      </div>
+      <button id="pause" type="button" hidden></button>
+      <a id="setup" class="button primary" href="#config" hidden data-t>Set up scanner</a>
+    </div>
+    <label id="quick-profiles" hidden><span data-t>Profile</span> <select id="profile-select"></select></label>
+    <div id="scanner" hidden></div>
+    <div id="paperless-line" hidden></div>
+  </section>
+
+  <div id="out-error" class="notice err" hidden></div>
+  <div id="settings-error" class="notice err" hidden></div>
+
+  <div id="conflict" class="notice warn" hidden>
+    <button type="button" class="dismiss" id="conflict-dismiss" data-t>Hide</button>
+    <p id="conflict-text"></p>
+  </div>
+
+  <div id="cert" class="notice warn" hidden>
+    <p><strong data-t>Paperless uses a certificate that cannot be verified automatically</strong>
+      <span data-t>(e.g. the self-signed default certificate of a Synology). Please compare the fingerprint with the one the browser shows (lock icon → certificate).</span></p>
+    <p class="fp" id="cert-fp"></p>
+    <button class="primary" id="cert-trust" type="button" data-t>Trust this certificate</button>
+    <span id="cert-msg" class="save-msg"></span>
+  </div>
+
+  <div data-page="main">
+  <section>
+    <h2 data-t>Recent documents</h2>
+    <div id="docs"></div>
+  </section>
+
+  <section>
+    <details id="settings-card" class="card">
+      <summary><h2 data-t>Settings</h2></summary>
+      <form id="settings" autocomplete="off"></form>
+    </details>
+  </section>
+
+  <section>
+    <h2 data-t>Profiles</h2>
+    <div id="profiles"></div>
+  </section>
+
+  <section>
+    <details>
+      <summary data-t>Log</summary>
+      <div id="log"></div>
+    </details>
+  </section>
+  </div>
+
+  <div data-page="config" hidden>
+  <section>
+    <h2 data-t>Configuration</h2>
+    <form id="config" autocomplete="off"></form>
+  </section>
+  </div>
+</main>
+
+<script>
+"use strict";
+const HEADERS = { "X-Scan-Watch": "1", "Content-Type": "application/json" };
+// Texts are English; t() translates them with the catalog from /api/i18n, N_() only
+// marks them for tools/update_po.py where they are translated later.
+let MESSAGES = {};
+let LANG = "en";
+const N_ = (text) => text;
+function t(text, args = {}) {
+  return (MESSAGES[text] || text).replace(/\{(\w+)\}/g, (m, key) => (key in args ? args[key] : m));
+}
+
+const STATES = {
+  starting: [N_("Starting …"), "muted"],
+  connecting: [N_("Connecting to the scanner …"), "muted"],
+  waiting: [N_("Ready – insert paper"), "ok"],
+  scanning: [N_("Scanning …"), "busy"],
+  feeder_blocked: [N_("Scan failed – please empty the feeder"), "warn"],
+  busy_elsewhere: [N_("Scanner busy with another program – continuing when the feeder is empty"), "warn"],
+  unreachable: [N_("Scanner not reachable"), "err"],
+  paused: [N_("Paused – scanner can go to standby"), "muted"],
+  no_scanner: [N_("No scanner set up"), "warn"],
+  stopped: [N_("Stopped"), "muted"],
+};
+const FORMS = {
+  settings: [
+    [N_("Scan"), ["color", "dpi", "duplex", "paper", "split"]],
+    [N_("Blank pages"), ["skip_blank", "blank_threshold"]],
+    [N_("Storage"), ["target", "out", "prefix", "paperless_tags"]],
+  ],
+  config: [
+    ["Paperless", ["paperless_url", "paperless_public_url", "paperless_token"]],
+    [N_("Scanner"), ["host", "auto_pause", "snmp_community"]],
+  ],
+};
+const LABELS = {
+  color: N_("Color mode"), dpi: N_("Resolution"), duplex: N_("Both sides (duplex)"), paper: N_("Paper size"),
+  split: N_("Split"), skip_blank: N_("Remove blank pages"), blank_threshold: N_("Threshold in % content"),
+  target: N_("Target"), out: N_("Output folder"), prefix: N_("File name prefix"), paperless_url: N_("Paperless URL"),
+  paperless_public_url: N_("Paperless URL for links in the browser (empty: the same)"),
+  paperless_token: N_("Paperless token"), paperless_tags: N_("Paperless tags (comma separated)"), host: N_("Scanner address"),
+  auto_pause: N_("Auto pause after minutes without paper (0 = off)"),
+  snmp_community: N_("SNMP community: end the auto pause when the scanner wakes up (Canon DR-S150 only, experimental; empty = off)"),
+};
+const DOC_EVENTS = new Set(["paperless_status", "out_error", "out_ok", "settings_error", "settings_ok", "conflict", "profiles", "paused", "resumed", "scanner", "document", "saved", "uploaded", "upload_error", "paperless_done",
+  "paperless_failed", "untrusted_cert", "ready"]);
+const WARN_EVENTS = new Set(["warning", "untrusted_cert", "conflict"]);
+const ERROR_EVENTS = new Set(["out_error", "settings_error", "scan_error", "upload_error", "paperless_error", "paperless_failed"]);
+
+let status = null;
+let events = null;
+let refreshTimer = null;
+const $ = (id) => document.getElementById(id);
+
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (v === undefined || v === null || v === false) continue;
+    if (k === "class") node.className = v;
+    else if (k in node && k !== "list") node[k] = v;
+    else node.setAttribute(k, v);
+  }
+  node.append(...children.filter((c) => c !== null && c !== undefined));
+  return node;
+}
+
+function label(key, value) {
+  const option = (status.choices[key] || []).find(([v]) => v === value);
+  return option ? option[1] : String(value);
+}
+
+// Red when the change is in effect but could not be written to the settings file.
+function showResult(node, res) {
+  node.className = res.stored === false ? "save-msg err" : "save-msg";
+  node.textContent = res.message;
+}
+
+async function api(path, body) {
+  const res = await fetch(path, body === undefined ? {} : { method: "POST", headers: HEADERS, body: JSON.stringify(body) });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  return data;
+}
+
+async function load() {
+  status = await api("/api/status");
+  renderState();
+  startCountdown();
+  renderProfiles();
+  renderScanner();
+  renderPaperless();
+  renderDocs();
+  renderCert();
+  renderConflict();
+  Object.keys(FORMS).forEach(renderSettings);
+  $("log").replaceChildren();
+  status.log.forEach(addLog);
+  connect(status.last_event);
+}
+
+async function refresh() {
+  const fresh = await api("/api/status");
+  // Keep the form as it is, the user may be editing it.
+  status = Object.assign(fresh, { settings: status.settings, editable: status.editable });
+  renderState();
+  startCountdown();
+  renderProfiles();
+  renderScanner();
+  renderPaperless();
+  renderDocs();
+  renderCert();
+  renderConflict();
+}
+
+function scheduleRefresh() {
+  clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(() => refresh().catch(() => {}), 250);
+}
+
+function connect(since) {
+  if (events) events.close();
+  let failed = false;
+  events = new EventSource(`/api/events?since=${since}`);
+  events.onopen = () => {
+    $("conn").textContent = "";
+    // After a restart of the server, event IDs start over: reload everything.
+    if (failed) load().catch(() => {});
+  };
+  events.onerror = () => {
+    failed = true;
+    $("conn").textContent = t("Connection lost …");
+  };
+  events.onmessage = (msg) => {
+    const e = JSON.parse(msg.data);
+    addLog(e);
+    if (e.event === "state") { status.state = e.data.state; renderState(); }
+    else if (e.event === "paper") { status.page = null; renderState(); }
+    else if (e.event === "page") { status.page = e.data; renderState(); }
+    else if (e.event === "paused" || e.event === "resumed") { status.paused = e.event === "paused"; renderState(); }
+    if (DOC_EVENTS.has(e.event)) scheduleRefresh();
+  };
+}
+
+function renderState() {
+  const [text, tone] = STATES[status.state] || [status.state, "muted"];
+  let line = t(text);
+  if (status.state === "scanning" && status.page) line = t("Scanning … page {n}", { n: status.page.page });
+  if (status.paused && status.state === "scanning") line = t("{state} (then pause)", { state: line });
+  $("state-text").textContent = line;
+  $("status").dataset.tone = tone;
+  // Pausing lets a reachable scanner sleep; a running pause can always be ended.
+  $("pause").hidden = !status.paused && !["waiting", "scanning", "feeder_blocked", "busy_elsewhere"].includes(status.state);
+  $("setup").hidden = status.state !== "no_scanner";
+  $("pause").textContent = status.paused ? t("Resume") : t("Pause");
+  $("pause").className = status.paused ? "primary" : "";
+  const s = status.settings;
+  const folder = status.out_label || s.out;
+  const where = { folder, paperless: "Paperless", both: `${folder} + Paperless` }[s.target];
+  $("summary").textContent = scanSummary(s) + ` → ${where}`;
+  renderCountdown();
+}
+
+function scanSummary(s) {
+  return [label("color", s.color), `${s.dpi} dpi`, s.duplex ? "Duplex" : "Simplex", label("paper", s.paper),
+    s.split === "sheet" ? t("per sheet") : t("per stack")].join(" · ");
+}
+
+// Second line of a profile card: where the PDFs go and what deviates from the usual.
+function storageSummary(s) {
+  return [`→ ${label("target", s.target)}`,
+    s.paperless_tags ? t("Tags: {tags}", { tags: s.paperless_tags }) : null,
+    s.prefix !== "scan" ? t("Prefix: {prefix}", { prefix: s.prefix }) : null,
+    s.skip_blank ? null : t("keeps blank pages")].filter(Boolean).join(" · ");
+}
+
+$("profile-select").addEventListener("change", (ev) => profileAction({ action: "apply", name: ev.target.value }));
+
+// Cards in the settings only manage profiles; choosing one is done in the status section.
+function profileCard(p) {
+  return el("div", { class: p.active ? "profile active" : "profile" },
+    el("div", { class: "head" },
+      el("span", { class: "name" }, p.name),
+      p.active ? el("span", { class: "badge ok" }, t("active")) : null,
+      el("span", { class: "tools" },
+        el("button", { type: "button", onclick: () => { editingProfile = p.name; renderProfileList(); } }, t("Edit")),
+        el("button", { type: "button", class: "del", title: t("Delete profile"), "aria-label": t("Delete profile"),
+          onclick: () => confirm(t("Delete profile “{name}”?", { name: p.name })) && profileAction({ action: "delete", name: p.name }) }, "×"))),
+    el("span", { class: "line" }, `${scanSummary(effective(p.values))} ${storageSummary(effective(p.values))}`));
+}
+
+// What a profile does when applied: settings fixed by environment or arguments keep their value.
+function effective(values) {
+  return Object.assign({}, values, ...status.env.filter((k) => k in values).map((k) => ({ [k]: status.settings[k] })));
+}
+
+function profileEditor(p) {
+  const name = el("input", { type: "text", maxLength: 40, value: p.name, id: "pe-name" });
+  const fields = PROFILE_KEYS.map((key) => el("div", { class: "field" },
+    el("label", { htmlFor: `pe-${key}` }, t(LABELS[key])),
+    status.env.includes(key) ? readOnly(key) : inputFor(key, p.values[key], `pe-${key}`)));
+  const form = el("form", { class: "profile editing", autocomplete: "off" },
+    el("div", { class: "field" }, el("label", { htmlFor: "pe-name" }, t("Name")), name),
+    ...fields,
+    el("p", { class: "line" }, p.active ? t("This profile is in use: changes apply right away.") : ""),
+    el("div", { class: "actions" },
+      el("button", { class: "primary", type: "submit" }, t("Save")),
+      el("button", { type: "button", onclick: () => { editingProfile = null; renderProfileList(); } }, t("Cancel"))));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    profileAction({ action: "update", name: p.name, new_name: name.value, values: changes(form, p.values) });
+  });
+  return form;
+}
+
+// Countdown until the automatic pause, ticking locally between status updates.
+let autoPauseEnd = null;
+let editingProfile = null;  // name of the profile whose editor is open
+const PROFILE_KEYS = ["color", "dpi", "duplex", "paper", "split", "skip_blank", "blank_threshold", "target", "prefix",
+  "paperless_tags"];
+let autoPauseTotal = 0;
+setInterval(() => renderCountdown(), 1000);
+
+// Only with a fresh status from the server; live events keep the old one.
+function startCountdown() {
+  const info = status.auto_pause;  // [seconds left, total seconds] or null
+  autoPauseEnd = info ? Date.now() + info[0] * 1000 : null;
+  autoPauseTotal = info ? info[1] : 0;
+  renderCountdown();
+}
+
+function renderCountdown() {
+  const box = $("auto-pause");
+  box.hidden = autoPauseEnd === null || status.paused || status.state !== "waiting";
+  if (box.hidden) return;
+  const left = Math.max(0, Math.round((autoPauseEnd - Date.now()) / 1000));
+  const hours = Math.floor(left / 3600);
+  const mm = String(Math.floor(left / 60) % 60).padStart(hours ? 2 : 1, "0");
+  const ss = String(left % 60).padStart(2, "0");
+  $("auto-pause-text").textContent = t("Auto pause in {time} without paper", { time: hours ? `${hours}:${mm}:${ss}` : `${mm}:${ss}` });
+  $("auto-pause-bar").style.width = `${autoPauseTotal ? 100 * left / autoPauseTotal : 0}%`;
+}
+
+function renderPaperless() {
+  const p = status.paperless;  // only while Paperless is a target
+  $("paperless-line").hidden = !p;
+  if (!p) return;
+  const time = new Date(p.time * 1000).toLocaleTimeString(LANG, { hour: "2-digit", minute: "2-digit" });
+  // On failure the cause says it best: "not reachable (…)", "HTTP 401 – API token invalid", …
+  $("paperless-line").replaceChildren("Paperless: ",
+    el("span", { class: p.ok ? "ok" : "err" }, p.ok ? t("connected") : p.message || t("not reachable")),
+    ` · ${t("checked {time}", { time })}`);
+}
+
+function renderScanner() {
+  const info = status.scanner;
+  $("scanner").hidden = !info || !info.model;
+  if (!info || !info.model) return;
+  const meta = [
+    info.serial ? t("Serial number {serial}", { serial: info.serial }) : null,
+    info.feeder_capacity ? t("Feeder {n} sheets", { n: info.feeder_capacity }) : null,
+    info.version ? `eSCL ${info.version}` : null,
+    info.driver && info.driver !== "eSCL" ? t("Driver {name}", { name: info.driver }) : null,
+  ].filter(Boolean).join(" · ");
+  $("scanner").replaceChildren(
+    info.icon ? el("img", { src: "/api/scanner-icon", alt: "" }) : null,
+    el("div", {},
+      el("div", { class: "model" }, info.model),
+      el("div", { class: "meta" }, meta,
+        ...(info.admin_url ? [meta ? " · " : "", el("a", { href: info.admin_url, target: "_blank", rel: "noopener" }, t("Device page ↗"))] : []))));
+}
+
+function renderDocs() {
+  if (!status.docs.length) {
+    $("docs").replaceChildren(el("p", { class: "empty" }, t("No scans since the start.")));
+    return;
+  }
+  // The browser may need another address than scan-watch (e.g. inside a Docker network).
+  const paperlessUrl = (status.settings.paperless_public_url || status.settings.paperless_url).replace(/\/+$/, "");
+  $("docs").replaceChildren(...status.docs.map((d) => {
+    const badges = [];
+    const file = `/api/file/${encodeURIComponent(d.name)}`;
+    if (d.downloadable) badges.push(el("a", { class: "badge", href: file, target: "_blank", rel: "noopener" }, t("Open PDF")));
+    // Kept only in memory: lost on restart unless downloaded.
+    if (d.unsaved) badges.push(el("a", { class: "badge err", href: file, download: d.name }, t("Not stored – download PDF")));
+    if (d.folder_error) badges.push(el("span", { class: "badge err" }, t("Folder: not saved")));
+    if (d.paperless === "uploaded") badges.push(el("span", { class: "badge busy" }, t("Paperless processing …")));
+    if (d.paperless === "done") {
+      badges.push(d.document && paperlessUrl
+        ? el("a", { class: "badge ok", href: `${paperlessUrl}/documents/${d.document}/details`, target: "_blank", rel: "noopener" }, t("In Paperless #{document}", { document: d.document }))
+        : el("span", { class: "badge ok" }, t("In Paperless")));
+    }
+    if (d.paperless === "failed") badges.push(el("span", { class: "badge err", title: d.error || "" }, t("Paperless: rejected")));
+    if (d.paperless === "error") badges.push(el("span", { class: "badge err" }, t("Paperless: upload failed")));
+    const time = new Date(d.time * 1000).toLocaleTimeString(LANG, { hour: "2-digit", minute: "2-digit" });
+    return el("div", { class: "doc" },
+      el("img", { src: `/api/thumb/${encodeURIComponent(d.name)}`, alt: "", loading: "lazy" }),
+      el("div", {},
+        el("div", { class: "name" }, d.name),
+        el("div", { class: "meta" }, `${time} · ${d.pages === 1 ? t("1 page") : t("{n} pages", { n: d.pages })}`),
+        d.paperless === "failed" && d.error ? el("div", { class: "meta" }, d.error) : null,
+        el("div", { class: "badges" }, ...badges)));
+  }));
+}
+
+// Stays until hidden, since a second instance is easy to miss in the log.
+const CONFLICT_HIDDEN = "scan-watch.conflict-hidden";
+function renderConflict() {
+  const c = status.conflict;
+  let hidden = 0;
+  try { hidden = Number(sessionStorage.getItem(CONFLICT_HIDDEN)) || 0; } catch (e) { /* no storage */ }
+  $("conflict").hidden = !c || c.time <= hidden;
+  if (!c) return;
+  const time = new Date(c.time * 1000).toLocaleString(LANG, { dateStyle: "short", timeStyle: "short" });
+  $("conflict-text").textContent = `${time}: ${c.message}`;
+}
+
+$("conflict-dismiss").addEventListener("click", () => {
+  try { sessionStorage.setItem(CONFLICT_HIDDEN, String(status.conflict.time)); } catch (e) { /* no storage */ }
+  $("conflict").hidden = true;
+});
+
+function renderCert() {
+  $("out-error").hidden = !status.out_error;
+  $("out-error").textContent = status.out_error || "";
+  $("settings-error").hidden = !status.settings_error;
+  $("settings-error").textContent = status.settings_error
+    ? t("{error} – changes in the web interface and profiles only last until restart.", { error: status.settings_error }) : "";
+  $("cert").hidden = !status.fingerprint;
+  $("cert-fp").textContent = status.fingerprint || "";
+}
+
+// A setting the page cannot change, with its current value; every one gets the same mark, the tooltip says why.
+function readOnly(key) {
+  const s = status.settings;
+  const lock = el("span", { class: "lock", title: status.env.includes(key) ? t("set by environment variable or argument")
+    : t("can only be set in the environment (.env)") }, t("fixed"));
+  if (key === "paperless_token") return el("span", { class: "ro" }, status.token_set ? t("set") : t("– missing –"), lock);
+  let value = s[key] === "" ? "–" : label(key, s[key]);
+  if (key === "out" && status.out_label) value = status.out_label;
+  if (key === "duplex" || key === "skip_blank") value = s[key] ? t("yes") : t("no");
+  if (key === "paperless_url" && status.pinned) value = t("{url} (certificate pinned)", { url: value });
+  return el("span", { class: "ro" }, value, lock);
+}
+
+function renderSettings(formId) {
+  const s = status.settings;
+  const editable = new Set(status.editable);
+  const form = $(formId);
+  const fields = FORMS[formId].map(([title, keys]) => el("fieldset", {}, el("legend", {}, t(title)), ...keys.map((key) => {
+    const id = `f-${key}`;
+    let input;
+    if (key === "paperless_token" && editable.has(key)) {
+      // Never sent to the browser: empty means unchanged.
+      input = el("input", { id, type: "password", autocomplete: "new-password", "data-key": key,
+        placeholder: status.token_set ? t("set – leave empty to keep it") : t("– missing –") });
+    } else if (!editable.has(key)) {
+      input = readOnly(key);
+    } else {
+      input = inputFor(key, s[key], id);
+    }
+    return el("div", { class: "field" }, el("label", { htmlFor: id }, t(LABELS[key])), input);
+  })));
+  // These settings are applied to the next stack; the configuration page stores lasting settings.
+  const custom = formId === "settings";
+  const button = el("button", { class: "primary", type: "submit", disabled: true }, custom ? t("Apply") : t("Save"));
+  form.replaceChildren(...fields, el("div", { class: "actions" }, button, custom ? saveAsProfile() : testPaperless(),
+    el("span", { class: "save-msg" }), el("span", { class: "save-msg", id: custom ? "profile-msg" : "test-msg" })));
+}
+
+function renderProfiles() {
+  renderProfileSelect();
+  // An open editor is not replaced by refreshes caused by unrelated events.
+  if (!editingProfile) renderProfileList();
+}
+
+// Choosing a profile: only here, in the status section.
+function renderProfileSelect() {
+  const quick = status.profiles || [];
+  $("quick-profiles").hidden = !quick.length;
+  const active = quick.find((p) => p.active);
+  $("profile-select").replaceChildren(
+    // Settings changed by hand match no profile.
+    active ? null : el("option", { value: "", selected: true, disabled: true }, t("– custom settings –")),
+    ...quick.map((p) => el("option", { value: p.name, selected: p.active }, p.name)));
+}
+
+function renderProfileList() {
+  const box = $("profiles");
+  if (status.profiles === null) {
+    box.replaceChildren(el("p", { class: "empty" }, t("Profiles are available once the scanner has been detected")));
+    return;
+  }
+  const editing = status.profiles.find((p) => p.name === editingProfile);
+  if (!editing) editingProfile = null;
+  const cards = status.profiles.map((p) => (p === editing ? profileEditor(p) : profileCard(p)));
+  box.replaceChildren(
+    cards.length ? el("div", { class: "profiles" }, ...cards)
+      : el("p", { class: "empty" }, t("No profiles yet. Save the custom settings as a profile to switch between them.")),
+    el("span", { class: "save-msg", id: "profile-list-msg" }));
+}
+
+// "Save as profile" next to "Apply": stores the custom settings, including unapplied edits.
+function saveAsProfile() {
+  if (status.profiles === null) return null;
+  const name = el("input", { type: "text", maxLength: 40, placeholder: t("Profile name"), "aria-label": t("Profile name") });
+  const save = el("button", { type: "button", disabled: true, onclick: () => {
+    // Same normalization as the server: the name is the profile's key.
+    const key = name.value.trim().replace(/\s+/g, " ");
+    const exists = status.profiles.some((p) => p.name === key);
+    if (exists && !confirm(t("A profile “{name}” already exists. Overwrite it with the custom settings?", { name: key }))) return;
+    profileAction({ action: "save", name: key, overwrite: exists });
+  } }, t("Save as profile"));
+  name.addEventListener("input", () => { save.disabled = !name.value.trim(); });
+  name.addEventListener("keydown", (ev) => {
+    if (ev.key !== "Enter") return;
+    ev.preventDefault();  // not the form's submit ("Apply")
+    if (name.value.trim()) save.click();
+  });
+  return el("span", { class: "save-profile" }, name, save);
+}
+
+async function profileAction(request) {
+  // Saving happens at the custom settings, everything else in the profile list.
+  const msgId = request.action === "save" ? "profile-msg" : "profile-list-msg";
+  try {
+    // Unapplied edits in the form belong to what the user sees, so apply them first.
+    const form = $("settings");
+    if (request.action === "save" && Object.keys(changes(form)).length) await api("/api/settings", changes(form));
+    const res = await api("/api/profile", request);
+    editingProfile = null;
+    status = await api("/api/status");
+    renderState();
+    startCountdown();
+    renderSettings("settings");
+    renderProfiles();
+    renderCert();
+    showResult($(msgId), res);
+  } catch (e) {
+    renderProfiles();  // the dropdown shows what is really active again
+    $(msgId).className = "save-msg err";
+    $(msgId).textContent = e.message;
+  }
+}
+
+function inputFor(key, value, id) {
+  if (typeof value === "boolean") return el("input", { id, type: "checkbox", checked: value, "data-key": key });
+  if (status.choices[key]) {
+    return el("select", { id, "data-key": key },
+      ...status.choices[key].map(([v, text]) => el("option", { value: String(v), selected: v === value }, text)));
+  }
+  if (typeof value === "number") {
+    // Text, not type=number: that rejects "1,5" depending on the browser language.
+    return el("input", { id, type: "text", inputmode: "decimal", "data-key": key,
+      value: value.toLocaleString(LANG, { useGrouping: false, maximumFractionDigits: 6 }) });
+  }
+  return el("input", { id, type: "text", value, "data-key": key });
+}
+
+function testPaperless() {
+  const button = el("button", { type: "button", onclick: async () => {
+    const msg = $("test-msg");
+    button.disabled = true;
+    msg.className = "save-msg";
+    msg.textContent = t("Testing …");
+    try {
+      showResult(msg, await api("/api/paperless-test", {}));
+    } catch (e) {
+      msg.className = "save-msg err";
+      msg.textContent = e.message;
+    } finally {
+      button.disabled = false;
+      scheduleRefresh();
+    }
+  } }, t("Test Paperless connection"));
+  return button;
+}
+
+// Values of the [data-key] inputs that differ from base, converted to its types.
+function changes(form, base = status.settings) {
+  const out = {};
+  for (const input of form.querySelectorAll("[data-key]")) {
+    const key = input.dataset.key;
+    const old = base[key];
+    let value = input.type === "checkbox" ? input.checked : input.value;
+    if (input.type === "password") {
+      if (value) out[key] = value;  // a secret the page does not know: only a new one counts
+      continue;
+    }
+    if (typeof old === "number") {
+      const number = Number(String(value).trim().replace(",", "."));
+      value = String(value).trim() !== "" && !Number.isNaN(number) ? number : value;  // invalid: let the server explain
+    }
+    if (value !== old) out[key] = value;
+  }
+  return out;
+}
+
+for (const formId of Object.keys(FORMS)) {
+  const form = $(formId);
+  form.addEventListener("input", () => {
+    form.querySelector("button[type=submit]").disabled = Object.keys(changes(form)).length === 0;
+    const msg = form.querySelector(".save-msg");
+    msg.className = "save-msg";
+    msg.textContent = "";
+  });
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const button = form.querySelector("button[type=submit]");
+    button.disabled = true;
+    try {
+      const res = await api("/api/settings", changes(form));
+      // Only this form is redrawn, the other one may hold unsaved edits.
+      status = await api("/api/status");
+      renderState();
+      startCountdown();  // the watcher restarts it when it applies the settings ("ready" refreshes again)
+      renderProfiles();
+      renderDocs();
+      renderSettings(formId);
+      renderCert();
+      showResult(form.querySelector(".save-msg"), res);
+    } catch (e) {
+      const msg = form.querySelector(".save-msg");
+      msg.className = "save-msg err";
+      msg.textContent = e.message;
+      button.disabled = false;
+    }
+  });
+}
+
+function showPage() {
+  const page = location.hash === "#config" ? "config" : "main";
+  for (const node of document.querySelectorAll("[data-page]")) node.hidden = node.dataset.page !== page;
+  for (const link of document.querySelectorAll("[data-nav]")) {
+    if (link.dataset.nav === page) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  }
+}
+window.addEventListener("hashchange", showPage);
+showPage();
+
+$("pause").addEventListener("click", async () => {
+  const button = $("pause");
+  button.disabled = true;
+  try {
+    await api("/api/pause", { paused: !status.paused });
+  } catch (e) {
+    addLog({ event: "warning", time: Date.now() / 1000, message: e.message });
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$("cert-trust").addEventListener("click", async () => {
+  const msg = $("cert-msg");
+  msg.textContent = "";
+  try {
+    showResult(msg, await api("/api/trust", { fingerprint: status.fingerprint }));
+    scheduleRefresh();
+  } catch (e) {
+    msg.className = "save-msg err";
+    msg.textContent = e.message;
+  }
+});
+
+function addLog(e) {
+  if (!e.message) return;
+  const log = $("log");
+  const atBottom = log.scrollTop + log.clientHeight >= log.scrollHeight - 4;
+  const time = new Date(e.time * 1000).toLocaleTimeString(LANG);
+  const cls = ERROR_EVENTS.has(e.event) ? "e" : WARN_EVENTS.has(e.event) ? "w" : null;
+  const indent = e.event === "page" ? "  " : "";
+  log.append(el("div", { class: cls }, el("span", { class: "t" }, time + "  "), indent + e.message.trim()));
+  while (log.childElementCount > 300) log.firstElementChild.remove();
+  if (atBottom) log.scrollTop = log.scrollHeight;
+}
+
+// Collapsed by default; the state is kept for the browser session (tab).
+const SETTINGS_OPEN = "scan-watch.settings-open";
+try { $("settings-card").open = sessionStorage.getItem(SETTINGS_OPEN) === "1"; } catch (e) { /* no storage */ }
+$("settings-card").addEventListener("toggle", () => {
+  try { sessionStorage.setItem(SETTINGS_OPEN, $("settings-card").open ? "1" : "0"); } catch (e) { /* no storage */ }
+});
+
+async function start() {
+  const firstVisit = !location.hash;
+  const i18n = await api("/api/i18n");
+  MESSAGES = i18n.messages;
+  LANG = i18n.lang;
+  document.documentElement.lang = LANG;
+  for (const node of document.querySelectorAll("[data-t]")) node.textContent = t(node.textContent.trim().replace(/\s+/g, " "));
+  await load();
+  // Nothing works without a scanner address: go where it is entered.
+  if (firstVisit && status.state === "no_scanner") location.hash = "#config";
+}
+
+start().catch((e) => {
+  $("state-text").textContent = t("Server not reachable");
+  $("summary").textContent = e.message;
+  setTimeout(() => location.reload(), 5000);
+});
+</script>
+</body>
+</html>

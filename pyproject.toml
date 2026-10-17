@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scan-watch"
+version = "1.0.0"
+description = "Scan automatically when paper is placed into an eSCL network scanner, store PDFs or upload them to Paperless-ngx"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = ["img2pdf", "Pillow>=9.1"]
+
+[project.scripts]
+scan-watch = "scan_watch.cli:main"
+
+[tool.setuptools]
+packages = ["scan_watch", "scan_watch.drivers"]
+
+[tool.setuptools.package-data]
+scan_watch = ["static/*", "locale/*.po"]

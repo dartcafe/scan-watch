@@ -1,0 +1,1167 @@
+# German translation of scan-watch.
+msgid ""
+msgstr ""
+"Project-Id-Version: scan-watch\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: scan_watch/cli.py
+msgid "Duplex (both sides)"
+msgstr "Duplex (beidseitig)"
+
+#: scan_watch/cli.py
+msgid "Simplex (one side)"
+msgstr "Simplex (einseitig)"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "yes"
+msgstr "ja"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "no"
+msgstr "nein"
+
+#: scan_watch/cli.py
+msgid "y, yes"
+msgstr "j, ja"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "– missing –"
+msgstr "– fehlt –"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "from ${name}"
+msgstr "aus ${name}"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "set"
+msgstr "gesetzt"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+#, python-brace-format
+msgid "{url} (certificate pinned)"
+msgstr "{url} (Zertifikat angepinnt)"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Color mode"
+msgstr "Farbmodus"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Resolution"
+msgstr "Auflösung"
+
+#: scan_watch/cli.py
+msgid "Sides"
+msgstr "Seiten"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Paper size"
+msgstr "Papierformat"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Remove blank pages"
+msgstr "Leere Seiten entfernen"
+
+#: scan_watch/cli.py
+msgid "Blank page threshold"
+msgstr "Leerseiten-Schwelle"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "{value} % (densest tile)"
+msgstr "{value} % (dichteste Kachel)"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Split"
+msgstr "Aufteilung"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Target"
+msgstr "Ziel"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Output folder"
+msgstr "Zielordner"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Paperless URL"
+msgstr "Paperless-URL"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Paperless token"
+msgstr "Paperless-Token"
+
+#: scan_watch/cli.py
+msgid "Paperless tags"
+msgstr "Paperless-Tags"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "File name prefix"
+msgstr "Dateiname-Präfix"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Scanner"
+msgstr "Scanner"
+
+#: scan_watch/cli.py
+msgid "Auto pause"
+msgstr "Auto-Pause"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "after {n} min without paper"
+msgstr "nach {n} min ohne Papier"
+
+#: scan_watch/cli.py
+msgid "off"
+msgstr "aus"
+
+#: scan_watch/cli.py
+msgid "Wake-up detection"
+msgstr "Aufwach-Erkennung"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "SNMP community “{community}”"
+msgstr "SNMP-Community „{community}“"
+
+#: scan_watch/cli.py
+msgid "Choice [Enter = unchanged]: "
+msgstr "Auswahl [Enter = unverändert]: "
+
+#: scan_watch/cli.py
+msgid "Scan settings"
+msgstr "Scan-Einstellungen"
+
+#: scan_watch/cli.py
+msgid ""
+"\n"
+"Number to change, Enter = start, q = quit: "
+msgstr ""
+"\n"
+"Nummer zum Ändern, Enter = Start, q = Beenden: "
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Threshold in % content [{value}]: "
+msgstr "Schwelle in % Inhalt [{value}]: "
+
+#: scan_watch/cli.py
+msgid "Invalid number."
+msgstr "Ungültige Zahl."
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Output folder [{value}]: "
+msgstr "Zielordner [{value}]: "
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Paperless URL, e.g. https://paperless.lan [{value}]: "
+msgstr "Paperless-URL, z. B. https://paperless.lan [{value}]: "
+
+#: scan_watch/cli.py
+msgid "API token from Paperless: profile (top right) → API Auth Token."
+msgstr "API-Token aus Paperless: Profil (oben rechts) → API Auth Token."
+
+#: scan_watch/cli.py
+msgid "Token (input hidden, Enter = unchanged): "
+msgstr "Token (Eingabe unsichtbar, Enter = unverändert): "
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Tags, comma separated, “-” = none [{value}]: "
+msgstr "Tags, kommagetrennt, „-“ = keine [{value}]: "
+
+#: scan_watch/cli.py
+msgid "Prefix"
+msgstr "Präfix"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Scanner address"
+msgstr "Scanner-Adresse"
+
+#: scan_watch/cli.py scan_watch/static/index.html
+msgid "Auto pause after minutes without paper (0 = off)"
+msgstr "Auto-Pause nach Minuten ohne Papier (0 = aus)"
+
+#: scan_watch/cli.py
+msgid "SNMP community for the wake-up detection, Canon DR-S150 only (“-” = off)"
+msgstr "SNMP-Community für die Aufwach-Erkennung, nur Canon DR-S150 („-“ = aus)"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Invalid: {error}"
+msgstr "Ungültig: {error}"
+
+#: scan_watch/cli.py
+msgid ""
+"The server uses a certificate that cannot be verified automatically\n"
+"(e.g. the self-signed default certificate of a Synology)."
+msgstr ""
+"Der Server benutzt ein Zertifikat, das nicht automatisch geprüft werden kann\n"
+"(z. B. das selbst signierte Standard-Zertifikat der Synology)."
+
+#: scan_watch/cli.py
+msgid "SHA-256 fingerprint:"
+msgstr "SHA-256-Fingerabdruck:"
+
+#: scan_watch/cli.py
+msgid "Compare it in the browser via the lock icon → certificate."
+msgstr "Vergleichen lässt er sich im Browser über das Schloss-Symbol → Zertifikat."
+
+#: scan_watch/cli.py
+msgid "Trust this certificate from now on? [y/N]: "
+msgstr "Diesem Zertifikat künftig vertrauen? [j/N]: "
+
+#: scan_watch/cli.py scan_watch/web.py
+#, python-brace-format
+msgid "Note: {message}"
+msgstr "Hinweis: {message}"
+
+#: scan_watch/cli.py
+msgid "Scan automatically as soon as paper is in the feeder."
+msgstr "Automatisch scannen, sobald Papier im Einzug liegt."
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Every setting can also be given as {prefix}<NAME>, e.g. {prefix}HOST or {token}."
+msgstr "Alle Einstellungen lassen sich auch als {prefix}<NAME> setzen, z. B. {prefix}HOST oder {token}."
+
+#: scan_watch/cli.py
+msgid "IP/host name of the scanner"
+msgstr "IP/Hostname des Scanners"
+
+#: scan_watch/cli.py
+msgid "folder, Paperless or both"
+msgstr "Ordner, Paperless oder beides"
+
+#: scan_watch/cli.py
+msgid "output folder for the PDFs"
+msgstr "Zielordner für die PDFs"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "e.g. https://paperless.lan (token via ${name} or the menu)"
+msgstr "z. B. https://paperless.lan (Token über ${name} oder Menü)"
+
+#: scan_watch/cli.py
+msgid "comma separated tag names"
+msgstr "kommagetrennte Tag-Namen"
+
+#: scan_watch/cli.py
+msgid "pages whose densest tile has less % content count as blank"
+msgstr "Seiten, deren dichteste Kachel weniger % Inhalt hat, gelten als leer"
+
+#: scan_watch/cli.py
+msgid "one PDF per stack or per sheet"
+msgstr "ein PDF pro Stapel oder pro Blatt"
+
+#: scan_watch/cli.py
+msgid "prefix of the file name"
+msgstr "Präfix des Dateinamens"
+
+#: scan_watch/cli.py
+msgid "MINUTES"
+msgstr "MINUTEN"
+
+#: scan_watch/cli.py
+msgid "pause after this many minutes without paper, so the scanner can go to standby (0 = never, default 30)"
+msgstr "nach so vielen Minuten ohne Papier pausieren, damit der Scanner in den Standby gehen kann (0 = nie, Standard 30)"
+
+#: scan_watch/cli.py
+msgid "skip the menu and start right away (automatic without a terminal)"
+msgstr "Menü überspringen und sofort starten (ohne Terminal automatisch)"
+
+#: scan_watch/cli.py
+msgid "[ADDRESS:]PORT"
+msgstr "[ADRESSE:]PORT"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "start the web interface, e.g. 8080 or 127.0.0.1:8080 (also ${web}); password via ${password}"
+msgstr "Web-Oberfläche starten, z. B. 8080 oder 127.0.0.1:8080 (auch ${web}); Passwort über ${password}"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Error: {error}"
+msgstr "Fehler: {error}"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Error: scanner address missing (menu, --host or {name})."
+msgstr "Fehler: Scanner-Adresse fehlt (Menü, --host oder {name})."
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Error: cannot start the web interface on “{address}” ({error})"
+msgstr "Fehler: Web-Oberfläche auf „{address}“ nicht startbar ({error})"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Web interface on port {port}"
+msgstr "Web-Oberfläche auf Port {port}"
+
+#: scan_watch/cli.py
+#, python-brace-format
+msgid "Web interface on port {port} – without password, everyone in the network can change the settings ({name})"
+msgstr "Web-Oberfläche auf Port {port} – ohne Passwort, jeder im Netz kann die Einstellungen ändern ({name})"
+
+#: scan_watch/cli.py
+msgid "Quit with Ctrl+C."
+msgstr "Beenden mit Strg+C."
+
+#: scan_watch/cli.py
+msgid "Stopped."
+msgstr "Beendet."
+
+#: scan_watch/core.py
+msgid "Paperless: URL or API token missing."
+msgstr "Paperless: URL oder API-Token fehlt."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Paperless: tag “{name}” created."
+msgstr "Paperless: Tag „{name}“ angelegt."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Paperless: {error}"
+msgstr "Paperless: {error}"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Could not read the certificate ({error})."
+msgstr "Zertifikat konnte nicht gelesen werden ({error})."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "To trust this certificate, check the fingerprint and set SCAN_WATCH_PAPERLESS_TLS_PIN={fingerprint}."
+msgstr "Um diesem Zertifikat zu vertrauen, Fingerabdruck prüfen und SCAN_WATCH_PAPERLESS_TLS_PIN={fingerprint} setzen."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Paperless: connection to {url} ok."
+msgstr "Paperless: Verbindung zu {url} ok."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "No paper for {minutes} min – paused automatically, the scanner can go to standby."
+msgstr "Seit {minutes} min kein Papier – automatisch pausiert, der Scanner kann in den Standby gehen."
+
+#: scan_watch/core.py
+msgid "Pausing after the current stack."
+msgstr "Pause nach dem aktuellen Stapel."
+
+#: scan_watch/core.py
+msgid "Paused – the scanner is no longer polled and can go to standby."
+msgstr "Pausiert – der Scanner wird nicht mehr abgefragt und kann in den Standby gehen."
+
+#: scan_watch/core.py
+msgid "The scanner woke up (paper inserted?) – resumed."
+msgstr "Der Scanner ist aufgewacht (Papier eingelegt?) – fortgesetzt."
+
+#: scan_watch/core.py scan_watch/web.py
+msgid "Resumed."
+msgstr "Fortgesetzt."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Wake-up detection is not available for this scanner (driver {driver})."
+msgstr "Für diesen Scanner gibt es keine Aufwach-Erkennung (Treiber {driver})."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Wake-up detection not possible ({reason}) – resume by hand."
+msgstr "Aufwach-Erkennung nicht möglich ({reason}) – bitte von Hand fortsetzen."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Wake-up detection via SNMP not available ({error}) – still trying, or resume by hand."
+msgstr "Aufwach-Erkennung per SNMP nicht verfügbar ({error}) – es wird weiter versucht, oder von Hand fortsetzen."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Scans are saved locally in {folder} until Paperless is reachable again."
+msgstr "Scans werden lokal in {folder} gespeichert, bis Paperless wieder erreichbar ist."
+
+#: scan_watch/core.py
+msgid "No scanner address set – enter it on the configuration page of the web interface."
+msgstr "Keine Scanner-Adresse eingestellt – bitte auf der Konfigurationsseite der Web-Oberfläche eintragen."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Scanner {host}, target: {target}"
+msgstr "Scanner {host}, Ziel: {target}"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Output folder {folder} is not writable ({error}) – check its owner and permissions."
+msgstr "Zielordner {folder} ist nicht beschreibbar ({error}) – bitte Besitzer und Rechte prüfen."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Output folder {folder} is writable again."
+msgstr "Zielordner {folder} ist wieder beschreibbar."
+
+#: scan_watch/core.py
+msgid "New settings applied."
+msgstr "Neue Einstellungen übernommen."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Paper detected – scan starts in {seconds:.0f} s …"
+msgstr "Papier erkannt – Scan startet in {seconds:.0f} s …"
+
+#: scan_watch/core.py
+msgid "The scanner refused the scan job because it is busy with another one."
+msgstr "Der Scanner hat den Scan-Auftrag abgelehnt, weil er mit einem anderen beschäftigt ist."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Scan failed: {error}"
+msgstr "Scan fehlgeschlagen: {error}"
+
+#: scan_watch/core.py
+msgid "Please empty the feeder, then it continues."
+msgstr "Bitte Einzug leeren, danach geht es weiter."
+
+#: scan_watch/core.py
+msgid "The scanner delivered no page although paper was in the feeder."
+msgstr "Der Scanner hat keine Seite geliefert, obwohl Papier im Einzug lag."
+
+#: scan_watch/core.py
+msgid "No pages with content – nothing saved."
+msgstr "Keine Seiten mit Inhalt – nichts gespeichert."
+
+#: scan_watch/core.py
+msgid "The scanner delivered an odd number of pages in duplex mode, so pages are missing."
+msgstr "Der Scanner hat im Duplex-Modus eine ungerade Seitenzahl geliefert, es fehlen also Seiten."
+
+#: scan_watch/core.py
+msgid "Ready for the next stack."
+msgstr "Bereit für den nächsten Stapel."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "{what} Is a second scan-watch instance or another scan program using this scanner?"
+msgstr "{what} Läuft eine zweite scan-watch-Instanz oder ein anderes Scanprogramm mit diesem Scanner?"
+
+#: scan_watch/core.py
+msgid "Scanner reachable again."
+msgstr "Scanner wieder erreichbar."
+
+#: scan_watch/core.py
+msgid "Ready. Insert paper and it is scanned automatically."
+msgstr "Bereit. Papier einlegen, dann wird automatisch gescannt."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Scanner has reported “{state}” for 30 s – is it being used elsewhere?"
+msgstr "Scanner meldet seit 30 s „{state}“ – wird er gerade anderweitig benutzt?"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Scanner not reachable ({error}) – still trying …"
+msgstr "Scanner nicht erreichbar ({error}) – versuche weiter …"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Driver: {name}"
+msgstr "Treiber: {name}"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Scanner detected: {model} (serial number {serial})"
+msgstr "Scanner erkannt: {model} (Seriennummer {serial})"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Scanner detected: {model}"
+msgstr "Scanner erkannt: {model}"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Page {n}"
+msgstr "Seite {n}"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Page {n} (front)"
+msgstr "Seite {n} (Vorderseite)"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Page {n} (back)"
+msgstr "Seite {n} (Rückseite)"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "{page}: blank ({ratio:.2f} %) – dropped"
+msgstr "{page}: leer ({ratio:.2f} %) – verworfen"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "{page}: {ratio:.2f} % content"
+msgstr "{page}: {ratio:.2f} % Inhalt"
+
+#: scan_watch/core.py scan_watch/static/index.html
+#, python-brace-format
+msgid "{n} pages"
+msgstr "{n} Seiten"
+
+#: scan_watch/core.py scan_watch/static/index.html
+msgid "1 page"
+msgstr "1 Seite"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "{pages}, {dropped} blank dropped"
+msgstr "{pages}, {dropped} leere verworfen"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "{n} documents, {dropped} blank pages dropped"
+msgstr "{n} Dokumente, {dropped} leere Seiten verworfen"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "{n} documents"
+msgstr "{n} Dokumente"
+
+#: scan_watch/core.py
+msgid "not reachable when the stack was inserted"
+msgstr "beim Einlegen des Stapels nicht erreichbar"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Handed to Paperless: {name} ({info})"
+msgstr "An Paperless übergeben: {name} ({info})"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Paperless upload failed: {error}"
+msgstr "Paperless-Upload fehlgeschlagen: {error}"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "{name} could not be stored anywhere – download it in the web interface before scan-watch is restarted."
+msgstr "{name} konnte nirgends gespeichert werden – bitte in der Web-Oberfläche herunterladen, bevor scan-watch neu startet."
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Could not save {name} in {folder}: {error}"
+msgstr "{name} konnte nicht in {folder} gespeichert werden: {error}"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Saved locally instead: {path}"
+msgstr "Stattdessen lokal gespeichert: {path}"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Saved: {path} ({info})"
+msgstr "Gespeichert: {path} ({info})"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Paperless: {name} processed (document #{document})"
+msgstr "Paperless: {name} verarbeitet (Dokument #{document})"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Paperless: {name} processed"
+msgstr "Paperless: {name} verarbeitet"
+
+#: scan_watch/core.py
+#, python-brace-format
+msgid "Paperless: {name} FAILED – {result}"
+msgstr "Paperless: {name} FEHLGESCHLAGEN – {result}"
+
+#: scan_watch/drivers/canon_dr_s150.py
+#, python-brace-format
+msgid "no process {name} on the scanner – other firmware?"
+msgstr "kein Prozess {name} auf dem Scanner – andere Firmware?"
+
+#: scan_watch/drivers/escl.py
+msgid "Scanner returned no job URL"
+msgstr "Scanner hat keine Job-URL zurückgegeben"
+
+#: scan_watch/paperless.py
+msgid "Certificate has changed – enter the Paperless URL again in the menu or clear SCAN_WATCH_PAPERLESS_TLS_PIN to check and pin the new certificate"
+msgstr "Zertifikat hat sich geändert – Paperless-URL im Menü neu eintragen bzw. SCAN_WATCH_PAPERLESS_TLS_PIN leeren, um das neue Zertifikat zu prüfen und anzupinnen"
+
+#: scan_watch/paperless.py
+#, python-brace-format
+msgid "Certificate not trusted ({reason})"
+msgstr "Zertifikat nicht vertrauenswürdig ({reason})"
+
+#: scan_watch/paperless.py
+#, python-brace-format
+msgid "not reachable ({reason})"
+msgstr "nicht erreichbar ({reason})"
+
+#: scan_watch/paperless.py
+#, python-brace-format
+msgid "HTTP {code} – API token invalid or without permission"
+msgstr "HTTP {code} – API-Token ungültig oder ohne Berechtigung"
+
+#: scan_watch/paperless.py
+msgid "HTTP 400 – Paperless rejects the host name; add the address to PAPERLESS_URL or PAPERLESS_ALLOWED_HOSTS"
+msgstr "HTTP 400 – Paperless lehnt den Hostnamen ab; Adresse in PAPERLESS_URL bzw. PAPERLESS_ALLOWED_HOSTS ergänzen"
+
+#: scan_watch/paperless.py
+msgid "HTTP 404 – no Paperless answers at this address (https instead of http?)"
+msgstr "HTTP 404 – unter dieser Adresse antwortet kein Paperless (https statt http?)"
+
+#: scan_watch/settings.py
+msgid "Legal / max. length"
+msgstr "Legal / max. Länge"
+
+#: scan_watch/settings.py
+msgid "Color"
+msgstr "Farbe"
+
+#: scan_watch/settings.py
+msgid "Grayscale"
+msgstr "Graustufen"
+
+#: scan_watch/settings.py
+msgid "Folder"
+msgstr "Ordner"
+
+#: scan_watch/settings.py
+msgid "Folder + Paperless"
+msgstr "Ordner + Paperless"
+
+#: scan_watch/settings.py
+msgid "one document per stack"
+msgstr "ein Dokument pro Stapel"
+
+#: scan_watch/settings.py
+msgid "one document per sheet"
+msgstr "ein Dokument pro Blatt"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}” is neither true nor false"
+msgstr "„{value}“ ist weder true noch false"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}” is not a whole number"
+msgstr "„{value}“ ist keine ganze Zahl"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}” is not a number"
+msgstr "„{value}“ ist keine Zahl"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}” is not one of {options}"
+msgstr "„{value}“ ist keiner von {options}"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}”: only letters, digits, dot, underscore and hyphen are allowed"
+msgstr "„{value}“: nur Buchstaben, Ziffern, Punkt, Unterstrich und Bindestrich erlaubt"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}” is not an http:// or https:// address"
+msgstr "„{value}“ ist keine http://- oder https://-Adresse"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}” must not be negative"
+msgstr "„{value}“ darf nicht negativ sein"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}” is not a valid scanner address"
+msgstr "„{value}“ ist keine gültige Scanner-Adresse"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "“{value}”: at most 64 characters, no spaces"
+msgstr "„{value}“: höchstens 64 Zeichen, keine Leerzeichen"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "{name}: {error}"
+msgstr "{name}: {error}"
+
+#: scan_watch/settings.py
+#, python-brace-format
+msgid "Settings not saved ({error})"
+msgstr "Einstellungen nicht gespeichert ({error})"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "{done} Only until restart: {error}"
+msgstr "{done} Gilt nur bis zum Neustart: {error}"
+
+#: scan_watch/web.py
+msgid "Invalid request"
+msgstr "Ungültige Anfrage"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "{key} is set by an environment variable"
+msgstr "{key} ist per Umgebungsvariable festgelegt"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "{key} cannot be changed here"
+msgstr "{key} kann hier nicht geändert werden"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "{key}: {error}"
+msgstr "{key}: {error}"
+
+#: scan_watch/web.py
+msgid "Scanner address missing"
+msgstr "Scanner-Adresse fehlt"
+
+#: scan_watch/web.py
+msgid "Output folder missing"
+msgstr "Zielordner fehlt"
+
+#: scan_watch/web.py
+msgid "Applied – takes effect from the next stack on."
+msgstr "Übernommen – gilt ab dem nächsten Stapel."
+
+#: scan_watch/web.py
+msgid "Applied."
+msgstr "Übernommen."
+
+#: scan_watch/web.py
+msgid "Paperless is not a target (see Target in the settings)"
+msgstr "Paperless ist kein Ziel (siehe Ziel in den Einstellungen)"
+
+#: scan_watch/web.py
+msgid "Paperless is not reachable"
+msgstr "Paperless ist nicht erreichbar"
+
+#: scan_watch/web.py
+msgid "Paperless is reachable."
+msgstr "Paperless ist erreichbar."
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "Profile name: 1 to {max} characters"
+msgstr "Profilname: 1 bis {max} Zeichen"
+
+#: scan_watch/web.py scan_watch/static/index.html
+msgid "Profiles are available once the scanner has been detected"
+msgstr "Profile sind verfügbar, sobald der Scanner erkannt wurde"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "Unknown profile “{name}”"
+msgstr "Unbekanntes Profil „{name}“"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "Profile “{name}” active."
+msgstr "Profil „{name}“ aktiv."
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "A profile “{name}” already exists"
+msgstr "Ein Profil „{name}“ gibt es schon"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "At most {max} profiles per scanner"
+msgstr "Höchstens {max} Profile pro Scanner"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "Profile “{name}” saved."
+msgstr "Profil „{name}“ gespeichert."
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "Profile “{name}” saved and applied."
+msgstr "Profil „{name}“ gespeichert und übernommen."
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "Profile “{name}” deleted."
+msgstr "Profil „{name}“ gelöscht."
+
+#: scan_watch/web.py
+msgid "Paused."
+msgstr "Pausiert."
+
+#: scan_watch/web.py
+msgid "The certificate pin is set by an environment variable"
+msgstr "Der Zertifikats-Pin ist per Umgebungsvariable festgelegt"
+
+#: scan_watch/web.py
+msgid "No HTTPS address entered for Paperless"
+msgstr "Keine HTTPS-Adresse für Paperless eingetragen"
+
+#: scan_watch/web.py
+#, python-brace-format
+msgid "Could not read the certificate ({error})"
+msgstr "Zertifikat konnte nicht gelesen werden ({error})"
+
+#: scan_watch/web.py
+msgid "The server now shows a different certificate – reload the page"
+msgstr "Der Server zeigt inzwischen ein anderes Zertifikat – Seite neu laden"
+
+#: scan_watch/web.py
+msgid "Certificate pinned."
+msgstr "Zertifikat angepinnt."
+
+#: scan_watch/web.py
+msgid "Settings file is writable again; changes are saved."
+msgstr "Die Settings-Datei ist wieder beschreibbar, Änderungen werden gespeichert."
+
+#: scan_watch/web.py
+msgid "Login required"
+msgstr "Anmeldung erforderlich"
+
+#: scan_watch/web.py
+msgid "Not found"
+msgstr "Nicht gefunden"
+
+#: scan_watch/web.py
+msgid "Request rejected"
+msgstr "Anfrage abgelehnt"
+
+#: scan_watch/static/index.html
+msgid "Overview"
+msgstr "Übersicht"
+
+#: scan_watch/static/index.html
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: scan_watch/static/index.html
+msgid "Set up scanner"
+msgstr "Scanner einrichten"
+
+#: scan_watch/static/index.html
+msgid "Profile"
+msgstr "Profil"
+
+#: scan_watch/static/index.html
+msgid "Hide"
+msgstr "Ausblenden"
+
+#: scan_watch/static/index.html
+msgid "Paperless uses a certificate that cannot be verified automatically"
+msgstr "Paperless benutzt ein Zertifikat, das nicht automatisch geprüft werden kann"
+
+#: scan_watch/static/index.html
+msgid "(e.g. the self-signed default certificate of a Synology). Please compare the fingerprint with the one the browser shows (lock icon → certificate)."
+msgstr "(z. B. das selbst signierte Standard-Zertifikat der Synology). Bitte den Fingerabdruck mit dem im Browser angezeigten vergleichen (Schloss-Symbol → Zertifikat)."
+
+#: scan_watch/static/index.html
+msgid "Trust this certificate"
+msgstr "Diesem Zertifikat vertrauen"
+
+#: scan_watch/static/index.html
+msgid "Recent documents"
+msgstr "Letzte Dokumente"
+
+#: scan_watch/static/index.html
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: scan_watch/static/index.html
+msgid "Profiles"
+msgstr "Profile"
+
+#: scan_watch/static/index.html
+msgid "Log"
+msgstr "Protokoll"
+
+#: scan_watch/static/index.html
+msgid "Starting …"
+msgstr "Startet …"
+
+#: scan_watch/static/index.html
+msgid "Connecting to the scanner …"
+msgstr "Verbinde mit dem Scanner …"
+
+#: scan_watch/static/index.html
+msgid "Ready – insert paper"
+msgstr "Bereit – Papier einlegen"
+
+#: scan_watch/static/index.html
+msgid "Scanning …"
+msgstr "Scannt …"
+
+#: scan_watch/static/index.html
+msgid "Scan failed – please empty the feeder"
+msgstr "Scan fehlgeschlagen – bitte Einzug leeren"
+
+#: scan_watch/static/index.html
+msgid "Scanner busy with another program – continuing when the feeder is empty"
+msgstr "Scanner von anderem Programm belegt – weiter, sobald der Einzug leer ist"
+
+#: scan_watch/static/index.html
+msgid "Scanner not reachable"
+msgstr "Scanner nicht erreichbar"
+
+#: scan_watch/static/index.html
+msgid "Paused – scanner can go to standby"
+msgstr "Pausiert – Scanner kann in Standby"
+
+#: scan_watch/static/index.html
+msgid "No scanner set up"
+msgstr "Kein Scanner eingerichtet"
+
+#: scan_watch/static/index.html
+msgid "Stopped"
+msgstr "Beendet"
+
+#: scan_watch/static/index.html
+msgid "Scan"
+msgstr "Scan"
+
+#: scan_watch/static/index.html
+msgid "Blank pages"
+msgstr "Leere Seiten"
+
+#: scan_watch/static/index.html
+msgid "Storage"
+msgstr "Ablage"
+
+#: scan_watch/static/index.html
+msgid "Both sides (duplex)"
+msgstr "Beidseitig (Duplex)"
+
+#: scan_watch/static/index.html
+msgid "Threshold in % content"
+msgstr "Schwelle in % Inhalt"
+
+#: scan_watch/static/index.html
+msgid "Paperless URL for links in the browser (empty: the same)"
+msgstr "Paperless-URL für Links im Browser (leer: dieselbe)"
+
+#: scan_watch/static/index.html
+msgid "Paperless tags (comma separated)"
+msgstr "Paperless-Tags (kommagetrennt)"
+
+#: scan_watch/static/index.html
+msgid "SNMP community: end the auto pause when the scanner wakes up (Canon DR-S150 only, experimental; empty = off)"
+msgstr "SNMP-Community: automatische Pause beenden, wenn der Scanner aufwacht (nur Canon DR-S150, experimentell; leer = aus)"
+
+#: scan_watch/static/index.html
+msgid "Connection lost …"
+msgstr "Verbindung unterbrochen …"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "Scanning … page {n}"
+msgstr "Scannt … Seite {n}"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "{state} (then pause)"
+msgstr "{state} (danach Pause)"
+
+#: scan_watch/static/index.html
+msgid "Resume"
+msgstr "Fortsetzen"
+
+#: scan_watch/static/index.html
+msgid "Pause"
+msgstr "Pausieren"
+
+#: scan_watch/static/index.html
+msgid "per sheet"
+msgstr "pro Blatt"
+
+#: scan_watch/static/index.html
+msgid "per stack"
+msgstr "pro Stapel"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "Tags: {tags}"
+msgstr "Tags: {tags}"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "Prefix: {prefix}"
+msgstr "Präfix: {prefix}"
+
+#: scan_watch/static/index.html
+msgid "keeps blank pages"
+msgstr "behält leere Seiten"
+
+#: scan_watch/static/index.html
+msgid "active"
+msgstr "aktiv"
+
+#: scan_watch/static/index.html
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: scan_watch/static/index.html
+msgid "Delete profile"
+msgstr "Profil löschen"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "Delete profile “{name}”?"
+msgstr "Profil „{name}“ löschen?"
+
+#: scan_watch/static/index.html
+msgid "Name"
+msgstr "Name"
+
+#: scan_watch/static/index.html
+msgid "This profile is in use: changes apply right away."
+msgstr "Dieses Profil ist gerade gewählt: Änderungen gelten sofort."
+
+#: scan_watch/static/index.html
+msgid "Save"
+msgstr "Speichern"
+
+#: scan_watch/static/index.html
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "Auto pause in {time} without paper"
+msgstr "Auto-Pause in {time} ohne Papier"
+
+#: scan_watch/static/index.html
+msgid "connected"
+msgstr "verbunden"
+
+#: scan_watch/static/index.html
+msgid "not reachable"
+msgstr "nicht erreichbar"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "checked {time}"
+msgstr "geprüft {time}"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "Serial number {serial}"
+msgstr "Seriennummer {serial}"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "Feeder {n} sheets"
+msgstr "Einzug {n} Blatt"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "Driver {name}"
+msgstr "Treiber {name}"
+
+#: scan_watch/static/index.html
+msgid "Device page ↗"
+msgstr "Geräteseite ↗"
+
+#: scan_watch/static/index.html
+msgid "No scans since the start."
+msgstr "Noch keine Scans seit dem Start."
+
+#: scan_watch/static/index.html
+msgid "Open PDF"
+msgstr "PDF öffnen"
+
+#: scan_watch/static/index.html
+msgid "Not stored – download PDF"
+msgstr "Nicht gespeichert – PDF herunterladen"
+
+#: scan_watch/static/index.html
+msgid "Folder: not saved"
+msgstr "Ordner: nicht gespeichert"
+
+#: scan_watch/static/index.html
+msgid "Paperless processing …"
+msgstr "Paperless verarbeitet …"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "In Paperless #{document}"
+msgstr "In Paperless #{document}"
+
+#: scan_watch/static/index.html
+msgid "In Paperless"
+msgstr "In Paperless"
+
+#: scan_watch/static/index.html
+msgid "Paperless: rejected"
+msgstr "Paperless: abgelehnt"
+
+#: scan_watch/static/index.html
+msgid "Paperless: upload failed"
+msgstr "Paperless: Upload fehlgeschlagen"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "{error} – changes in the web interface and profiles only last until restart."
+msgstr "{error} – Änderungen in der Web-Oberfläche und Profile gelten nur bis zum Neustart."
+
+#: scan_watch/static/index.html
+msgid "set by environment variable or argument"
+msgstr "per Umgebungsvariable oder Argument festgelegt"
+
+#: scan_watch/static/index.html
+msgid "can only be set in the environment (.env)"
+msgstr "nur über die Umgebung (.env) änderbar"
+
+#: scan_watch/static/index.html
+msgid "fixed"
+msgstr "fest"
+
+#: scan_watch/static/index.html
+msgid "set – leave empty to keep it"
+msgstr "gesetzt – leer lassen, um ihn zu behalten"
+
+#: scan_watch/static/index.html
+msgid "Apply"
+msgstr "Anwenden"
+
+#: scan_watch/static/index.html
+msgid "– custom settings –"
+msgstr "– eigene Einstellungen –"
+
+#: scan_watch/static/index.html
+msgid "No profiles yet. Save the custom settings as a profile to switch between them."
+msgstr "Noch keine Profile. Eigene Einstellungen als Profil speichern, um zwischen ihnen zu wechseln."
+
+#: scan_watch/static/index.html
+msgid "Profile name"
+msgstr "Profilname"
+
+#: scan_watch/static/index.html
+#, python-brace-format
+msgid "A profile “{name}” already exists. Overwrite it with the custom settings?"
+msgstr "Das Profil „{name}“ gibt es schon. Mit den eigenen Einstellungen überschreiben?"
+
+#: scan_watch/static/index.html
+msgid "Save as profile"
+msgstr "Als Profil speichern"
+
+#: scan_watch/static/index.html
+msgid "Testing …"
+msgstr "Teste …"
+
+#: scan_watch/static/index.html
+msgid "Test Paperless connection"
+msgstr "Paperless-Verbindung testen"
+
+#: scan_watch/static/index.html
+msgid "Server not reachable"
+msgstr "Server nicht erreichbar"

@@ -1,0 +1,10 @@
+.env
+.git
+.claude
+tools
+scans
+config
+tests
+**/__pycache__
+*.egg-info
+build

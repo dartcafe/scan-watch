@@ -1,0 +1,53 @@
+# All values come from .env (see .env.example). Container paths and the web
+# address are fixed in the Dockerfile and cannot be changed from here.
+services:
+  scan-watch:
+    build: .
+    image: scan-watch:latest
+    container_name: scan-watch
+    restart: ${RESTART:-unless-stopped}
+    init: true
+    user: "${PUID:-1000}:${PGID:-1000}"
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    volumes:
+      # Both folders must exist and be writable for PUID:PGID; otherwise Docker
+      # would create them owned by root and nothing could be saved.
+      - type: bind
+        source: ${SCANS_DIR:-./scans}
+        target: /scans
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${CONFIG_DIR:-./config}
+        target: /config
+        bind:
+          create_host_path: false
+    # Only these reach the container. Empty means not set; scan settings, target
+    # and tags are chosen in the web interface.
+    environment:
+      SCAN_WATCH_HOST: ${SCAN_WATCH_HOST:-}
+      SCAN_WATCH_PAPERLESS_URL: ${SCAN_WATCH_PAPERLESS_URL:-}
+      SCAN_WATCH_PAPERLESS_PUBLIC_URL: ${SCAN_WATCH_PAPERLESS_PUBLIC_URL:-}
+      SCAN_WATCH_PAPERLESS_TOKEN: ${SCAN_WATCH_PAPERLESS_TOKEN:-}
+      SCAN_WATCH_PAPERLESS_TLS_PIN: ${SCAN_WATCH_PAPERLESS_TLS_PIN:-}
+      SCAN_WATCH_WEB_PASSWORD: ${SCAN_WATCH_WEB_PASSWORD:-}
+      SCAN_WATCH_AUTO_PAUSE: ${SCAN_WATCH_AUTO_PAUSE:-}
+      TZ: ${TZ:-UTC}
+      # Shown in the web interface instead of /scans.
+      SCAN_WATCH_OUT_LABEL: ${SCANS_DIR:-./scans}
+    # Let a stack that is being scanned finish before the container stops.
+    stop_grace_period: 3m
+    # Writes only to /config, /scans and /tmp.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
