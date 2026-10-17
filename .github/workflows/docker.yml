@@ -1,5 +1,6 @@
 # Publishing a release (the draft made by release.yml) builds the image of its tag
-# for amd64 and arm64 and pushes it to Docker Hub as X.Y.Z, X.Y, X and latest.
+# for amd64 and arm64, pushes it to Docker Hub as X.Y.Z, X.Y, X and latest and
+# updates the repository overview from DOCKERHUB.md.
 # Needs the repository secrets DOCKERHUB_USERNAME and DOCKERHUB_TOKEN.
 name: Docker image
 
@@ -57,3 +58,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Docker Hub overview
+        uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa # v5.0.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ env.IMAGE }}
+          readme-filepath: ./DOCKERHUB.md
+          short-description: Scans automatically when paper is in the feeder of an eSCL scanner; PDFs to folder or Paperless-ngx

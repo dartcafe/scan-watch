@@ -89,7 +89,7 @@ and `latest`. To use it instead of building, replace
 `.env` holds the values, `compose.yml` lists which of them are used: the Docker
 part (host folders, user, port, `TZ`) and the few scan-watch settings that
 belong to the installation (scanner address, Paperless URL and token, web
-password, optionally auto pause and certificate pin). Nothing else from `.env`
+password, optionally auto pause, SNMP community and certificate pin). Nothing else from `.env`
 reaches the container, and the paths inside it are fixed in the Dockerfile.
 
 The web interface is at `http://<host>:8080` (or `WEB_PORT`). PDFs land in
