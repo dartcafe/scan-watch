@@ -78,6 +78,14 @@ docker compose up -d --build
 docker compose logs -f
 ```
 
+A prebuilt image (amd64, arm64) is on Docker Hub:
+[`dartcafedocker/scan-watch`](https://hub.docker.com/r/dartcafedocker/scan-watch),
+tagged with the version (e.g. `1.0.0`), its minor and major version (`1.0`, `1`)
+and `latest`. To use it instead of building, replace
+`build: .` and `image: scan-watch:latest` in `compose.yml` with
+`image: dartcafedocker/scan-watch:1` and start with `docker compose up -d`
+(`docker compose pull` fetches updates).
+
 `.env` holds the values, `compose.yml` lists which of them are used: the Docker
 part (host folders, user, port, `TZ`) and the few scan-watch settings that
 belong to the installation (scanner address, Paperless URL and token, web
